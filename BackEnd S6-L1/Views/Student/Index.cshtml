@@ -31,7 +31,7 @@
             if (!addStudent) return;
 
             addStudent.addEventListener("click", async () => {
-                const res = await fetch("/Student/Index", { method: "GET" });
+                const res = await fetch("/Student/CreateForm", { method: "GET" });
 
                 if (!res.ok) {
                     alert("Errore nel caricamento del modulo");

@@ -18,7 +18,7 @@ namespace BackEnd_S6_L1.Controllers
         {
             var student = await _studentServices.GetAllStudents();
 
-            return PartialView("_createStudent");
+            return View(student);
         }
 
         [HttpPost]
@@ -32,6 +32,11 @@ namespace BackEnd_S6_L1.Controllers
             await _studentServices.CreateAsync(student);
             return RedirectToAction("Index");
 
+        }
+
+        public IActionResult CreateForm()
+        {
+            return PartialView("_createStudent");
         }
     }
 }
