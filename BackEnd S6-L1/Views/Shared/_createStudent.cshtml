@@ -1,0 +1,26 @@
+﻿<form method="post" asp-controller="Student" asp-action="Index">
+
+    <div class="mb-3">
+        <label for="name" class="form-label">Nome</label>
+        <input type="text" class="form-control" id="name" name="Name" maxlength="50" required>
+    </div>
+
+    <div class="mb-3">
+        <label for="cognome" class="form-label">Cognome</label>
+        <input type="text" class="form-control" id="cognome" name="Cognome" maxlength="50" required>
+    </div>
+
+    <div class="mb-3">
+        <label for="nascita" class="form-label">Data di nascita</label>
+        <input type="date" class="form-control" id="nascita" name="DataNascita" required>
+    </div>
+
+    <div class="mb-3">
+        <label for="email" class="form-label">Email</label>
+        <input type="email" class="form-control" id="email" name="Email" required>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Salva studente</button>
+    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+
+</form>
