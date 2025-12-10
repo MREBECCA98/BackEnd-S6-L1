@@ -7,8 +7,8 @@ namespace BackEnd_S6_L1.Controllers
 
     public class StudentController : Controller
     {
-        private readonly StudentServices _studentServices;
-        public StudentController(StudentServices studentServices)
+        private readonly IStudentServices _studentServices;
+        public StudentController(IStudentServices studentServices)
         {
             _studentServices = studentServices;
         }
@@ -39,12 +39,24 @@ namespace BackEnd_S6_L1.Controllers
             return PartialView("_createStudent");
         }
 
-        public async Task<IActionResult> StudentsTable()
+        [HttpGet]
+        public async Task<IActionResult> UpdateAsync(Guid id)
+
         {
-            var students = await _studentServices.GetAllStudents();
-            return PartialView("_StudentsTable", students);
+            var student = await _studentServices.GetStudentByIdAsync(id);
+            return PartialView("_editStudent", student);
+
 
         }
+        [HttpPost]
+        public async Task<IActionResult> UpdateAsync(Student student)
+        {
+            if (!ModelState.IsValid)
+            {
+                return PartialView("_editStudent", student);
+            }
+            await _studentServices.UpdateAsync(student);
+            return Ok();
+        }
     }
-
 }

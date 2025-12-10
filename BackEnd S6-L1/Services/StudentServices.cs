@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BackEnd_S6_L1.Services
 {
-    public class StudentServices
+    public class StudentServices : IStudentServices
     {
         private readonly StudentDbContext _context;
 
@@ -32,6 +32,19 @@ namespace BackEnd_S6_L1.Services
             await _context.Students.AddAsync(student);
             return await _context.SaveChangesAsync() > 0;
 
+        }
+        //MODIFY
+        public async Task<bool> UpdateAsync(Student student)
+        {
+            _context.Students.Update(student);
+            return await _context.SaveChangesAsync() > 0;
+        }
+
+        // DELETE
+        public async Task<bool> DeleteAsync(Student student)
+        {
+            _context.Students.Remove(student);
+            return await _context.SaveChangesAsync() > 0;
         }
     }
 }

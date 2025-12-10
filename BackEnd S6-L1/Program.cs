@@ -7,7 +7,9 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddScoped<StudentServices>();
+//builder.Services.AddScoped<StudentServices>();
+builder.Services.AddScoped<IStudentServices, StudentServices>();
+
 
 
 string connectionString = string.Empty;
