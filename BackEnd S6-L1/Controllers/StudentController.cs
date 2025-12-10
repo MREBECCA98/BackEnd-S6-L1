@@ -38,5 +38,13 @@ namespace BackEnd_S6_L1.Controllers
         {
             return PartialView("_createStudent");
         }
+
+        public async Task<IActionResult> StudentsTable()
+        {
+            var students = await _studentServices.GetAllStudents();
+            return PartialView("_StudentsTable", students);
+
+        }
     }
+
 }

@@ -11,11 +11,10 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Modal title</h5>
+
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body" id="createStudentModalBody">
-                <p>Modal body text goes here.</p>
             </div>
 
         </div>
@@ -23,34 +22,81 @@
 </div>
 
 
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Cognome</th>
+            <th scope="col">Nome</th>
+            <th scope="col">Data di nascita</th>
+            <th scope="col">Email</th>
+            <th scope="col">Modifica</th>
+            <th scope="col">Elimina</th>
+        </tr>
+    </thead>
+    <tbody id="studentsTableBody">
+        
+    </tbody>
+</table>
+
+
+
 
 @section Scripts {
     <script>
         document.addEventListener("DOMContentLoaded", () => {
+
             const addStudent = document.getElementById("addStudent");
-            if (!addStudent) return;
 
             addStudent.addEventListener("click", async () => {
-                const res = await fetch("/Student/CreateForm", { method: "GET" });
 
-                if (!res.ok) {
-                    alert("Errore nel caricamento del modulo");
-                    return;
-                }
-
+                const res = await fetch("/Student/CreateForm");
                 const data = await res.text();
-                if (!data) return;
+                document.getElementById("createStudentModalBody").innerHTML = data;
 
-                const createStudentModalBody = document.getElementById("createStudentModalBody");
-                if (!createStudentModalBody) return;
-
-                createStudentModalBody.innerHTML = data;
-
-                const createStudentModalElement = document.getElementById("createStudentModal");
-                if (!createStudentModalElement) return;
-
-                const modal = bootstrap.Modal.getOrCreateInstance(createStudentModalElement);
+                const modalElement = document.getElementById("createStudentModal");
+                const modal = bootstrap.Modal.getOrCreateInstance(modalElement);
                 modal.show();
+
+                const createStudentForm = document.getElementById("createStudentForm");
+
+                createStudentForm.addEventListener("submit", async (e) => {
+                    e.preventDefault();
+
+                    const saveStudentBtn = document.getElementById("saveStudentBtn");
+                    const originalBtnText = saveStudentBtn.innerText;
+
+                    let dots = 0;
+                    const baseText = "Creazione studente";
+
+                    const interval = setInterval(() => {
+                        dots = (dots + 1) % 4;
+                        saveStudentBtn.innerText = baseText + ".".repeat(dots);
+                    }, 500);
+
+                    const formData = new FormData(createStudentForm);
+
+                    const result = await fetch("/Student/Index", {
+                        method: "POST",
+                        body: formData
+                    });
+
+                    clearInterval(interval);
+                    saveStudentBtn.innerText = "Salvataggio...";
+
+                    if (!result.ok) {
+                        alert("Errore nel salvataggio");
+                        saveStudentBtn.innerText = originalBtnText;
+                        return;
+                    }
+
+                    // alert("Studente creato con successo!");
+                    modal.hide();
+
+                            const tableHtml = await (await fetch("/Student/StudentsTable")).text();
+        document.getElementById("studentsTableBody").innerHTML = tableHtml;
+
+
+                });
             });
         });
     </script>

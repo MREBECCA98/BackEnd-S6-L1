@@ -1,4 +1,7 @@
-﻿<form method="post" asp-controller="Student" asp-action="Index">
+﻿
+
+
+<form id="createStudentForm">
 
     <div class="mb-3">
         <label for="name" class="form-label">Nome</label>
@@ -20,7 +23,9 @@
         <input type="email" class="form-control" id="email" name="Email" required>
     </div>
 
-    <button type="submit" class="btn btn-primary">Salva studente</button>
+    <button id="saveStudentBtn" type="submit" class="btn btn-primary">Salva studente</button>
     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
 
 </form>
+
+
