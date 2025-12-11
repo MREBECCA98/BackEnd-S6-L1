@@ -3,7 +3,8 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 namespace BackEnd_S6_L1.Models.Entities
 {
-    public class StudentDbContext : IdentityDbContext<IdentityUser> //CONNESSIONE AL DB PER IDENTITY
+    public class StudentDbContext :
+        IdentityDbContext<ApplicationUser> //CONNESSIONE AL DB PER IDENTITY
     {
         public DbSet<ApplicationUser> AspNetUsers { get; set; }
 
